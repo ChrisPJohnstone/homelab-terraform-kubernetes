@@ -2,6 +2,12 @@
 
 Terraform configuration that provisions resources into the [Kubernetes](https://kubernetes.io/) cluster bootstrapped by [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
 
+## Tech Stack
+
+- [Envoy Proxy](https://www.envoyproxy.io/) L4/L7 Proxy
+- [Envoy Gateway](https://gateway.envoyproxy.io/) Kubernetes Gateway API Implementation
+- [MetalLB](https://metallb.io/) Bare-metal load balancer
+
 ## Usage
 
 ### Pre-Requisites
