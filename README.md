@@ -1,19 +1,19 @@
 # Kubernetes Homelab
 
-Terraform configuration that provisions resources into the [Kubernetes](kubernetes.io/) cluster bootstrapped by [homelab-terraform-proxmox](github.com/ChrisPJohnstone/homelab-terraform-proxmox).
+Terraform configuration that provisions resources into the [Kubernetes](https://kubernetes.io/) cluster bootstrapped by [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
 
 ## Usage
 
 ### Pre-Requisites
 
 - [Terraform](https://developer.hashicorp.com/terraform) Installed
-- A kubernetes cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](github.com/ChrisPJohnstone/homelab-terraform-proxmox).
+- A kubernetes cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
 
 ### Get kubeconfig
 
 - Pull the kubeconfig from your control plane
   ```sh
-  ssh {username}@{host}:{path_to_config} > .kubeconfig
+  ssh {username}@{host}:'sudo cat {path_to_config}' > .kubeconfig
   ```
   Example
   ```sh
