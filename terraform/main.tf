@@ -1,10 +1,15 @@
 resource "kubernetes_namespace_v1" "namespace" {
-  metadata { name = var.metallb_namespace }
+  metadata { name = var.namespace }
 }
 
-# TODO: Read through YAML and probably reorganise
-resource "kubernetes_manifest" "metallb" {
+module "metallb" {
   depends_on = [kubernetes_namespace_v1.namespace]
-  for_each   = { for idx, doc in local.metallb_yaml : idx => doc }
-  manifest   = yamldecode(each.value)
+  source     = "./modules/metallb/"
+  namespace  = local.namespace
+}
+
+module "envoy" {
+  depends_on = [kubernetes_namespace_v1.namespace]
+  source     = "./modules/envoy/"
+  namespace  = local.namespace
 }

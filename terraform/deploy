@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+[[ ! -d ".terraform" ]] && terraform init
+if ! terraform state list "module.metallb.helm_release.metallb_release" &> /dev/null; then
+    terraform apply "${@}" \
+        -target="module.metallb.helm_release.metallb_release" \
+        -target="module.envoy.helm_release.envoy_gateway_release"
+fi
+terraform apply "${@}"

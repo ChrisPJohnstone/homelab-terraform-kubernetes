@@ -5,9 +5,16 @@ variable "kubeconfig_path" {
   default     = "../.kubeconfig"
 }
 
-variable "metallb_namespace" {
-  description = "Where to store kubeconfig"
+variable "namespace" {
+  description = "Name to create namespace under"
   type        = string
   nullable    = false
-  default     = "metallb-system"
+  default     = "homelab"
+}
+
+variable "envoy_gateway_version" {
+  description = "Version of envoy gateway to install"
+  type        = string
+  nullable    = false
+  default     = "1.8.1"
 }

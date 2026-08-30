@@ -31,13 +31,9 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 > [!NOTE]
 > All commands should be run from [terraform](./terraform/) directory
 
-- Initialise Terraform
-  ```sh
-  terraform init
-  ```
 - Deploy Resources
   ```sh
-  terraform apply
+  ./deploy
   ```
 - Destroy Resources
   ```sh
