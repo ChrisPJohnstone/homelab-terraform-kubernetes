@@ -15,6 +15,7 @@ variable "db_password" {
   description = "Password for miniflux database user"
   type        = string
   nullable    = false
+  sensitive   = true
 }
 
 variable "db_ssl" {
@@ -34,4 +35,5 @@ variable "admin_password" {
   description = "Password to give miniflux admin user"
   type        = string
   nullable    = false
+  sensitive   = true
 }
