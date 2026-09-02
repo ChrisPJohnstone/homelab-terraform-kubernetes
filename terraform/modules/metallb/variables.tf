@@ -22,7 +22,7 @@ variable "ip_range" {
   description = "CIDR or range for IPAddressPool"
   type        = string
   nullable    = false
-  default     = "192.168.122.200-192.168.122.250"
+  default     = "192.168.0.220-192.168.0.250"
 }
 
 variable "l2_advertisement_api_version" {
