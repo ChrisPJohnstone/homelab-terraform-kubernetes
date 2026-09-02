@@ -22,4 +22,5 @@ module "miniflux" {
   db_password    = var.miniflux_db_password
   admin_username = var.miniflux_admin_username
   admin_password = var.miniflux_admin_password
+  gateway_name   = module.envoy.gateway_name
 }

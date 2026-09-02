@@ -37,3 +37,24 @@ variable "admin_password" {
   nullable    = false
   sensitive   = true
 }
+
+variable "gateway_name" {
+  description = "Name of the Gateway to attach the miniflux HTTPRoute to"
+  type        = string
+  nullable    = false
+  default     = "envoy-gateway"
+}
+
+variable "gateway_namespace" {
+  description = "Namespace of the Gateway to attach the miniflux HTTPRoute to"
+  type        = string
+  nullable    = false
+  default     = "homelab"
+}
+
+variable "hostname" {
+  description = "Hostname to route to the miniflux service"
+  type        = string
+  nullable    = false
+  default     = "miniflux.home.lab"
+}

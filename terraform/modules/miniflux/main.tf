@@ -10,7 +10,6 @@ resource "kubernetes_secret_v1" "miniflux" {
   }
 }
 
-# TODO: Set up service
 resource "kubernetes_deployment_v1" "miniflux" {
   metadata {
     namespace = var.namespace
@@ -68,6 +67,49 @@ resource "kubernetes_deployment_v1" "miniflux" {
           }
         }
       }
+    }
+  }
+}
+
+resource "kubernetes_service_v1" "miniflux" {
+  metadata {
+    namespace = var.namespace
+    name      = "miniflux"
+    labels = {
+      app = "miniflux"
+    }
+  }
+  spec {
+    selector = {
+      app = "miniflux"
+    }
+    port {
+      port        = 80
+      target_port = 8080
+    }
+  }
+}
+
+resource "kubernetes_manifest" "miniflux_httproute" {
+  manifest = {
+    apiVersion = "gateway.networking.k8s.io/v1"
+    kind       = "HTTPRoute"
+    metadata = {
+      name      = "miniflux"
+      namespace = var.namespace
+    }
+    spec = {
+      parentRefs = [{
+        name      = var.gateway_name
+        namespace = var.gateway_namespace
+      }]
+      hostnames = [var.hostname]
+      rules = [{
+        backendRefs = [{
+          name = kubernetes_service_v1.miniflux.metadata[0].name
+          port = 80
+        }]
+      }]
     }
   }
 }
