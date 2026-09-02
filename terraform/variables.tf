@@ -31,13 +31,6 @@ variable "miniflux_db_password" {
   nullable    = false
 }
 
-variable "miniflux_db_ssl" {
-  description = "Wether to use to use SSL for miniflux database connection"
-  type        = string
-  nullable    = false
-  default     = "disable"
-}
-
 variable "miniflux_admin_username" {
   description = "Username to give miniflux admin user"
   type        = string
