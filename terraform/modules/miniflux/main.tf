@@ -34,7 +34,7 @@ resource "kubernetes_deployment_v1" "miniflux" {
       spec {
         container {
           name  = "miniflux"
-          image = "docker.io/miniflux/miniflux:latest"
+          image = "docker.io/miniflux/miniflux:${var.miniflux_version}"
           env {
             name = "DATABASE_URL"
             value_from {

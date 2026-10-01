@@ -38,6 +38,13 @@ variable "admin_password" {
   sensitive   = true
 }
 
+variable "miniflux_version" {
+  description = "Version of miniflux to install"
+  type        = string
+  nullable    = false
+  default     = "2.3.3"
+}
+
 variable "gateway_name" {
   description = "Name of the Gateway to attach the miniflux HTTPRoute to"
   type        = string
