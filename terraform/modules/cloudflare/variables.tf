@@ -48,5 +48,4 @@ variable "cloudflared_version" {
   description = "Version of cloudflared to run the connector with"
   type        = string
   nullable    = false
-  default     = "2026.9.3"
 }

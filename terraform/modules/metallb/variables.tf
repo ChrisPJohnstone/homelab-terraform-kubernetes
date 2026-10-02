@@ -8,7 +8,6 @@ variable "metallb_version" {
   description = "Version of MetalLB to install"
   type        = string
   nullable    = false
-  default     = "0.16.1"
 }
 
 variable "ip_pool_api_version" {

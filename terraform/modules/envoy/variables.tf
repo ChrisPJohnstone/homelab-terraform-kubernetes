@@ -8,7 +8,6 @@ variable "envoy_gateway_version" {
   description = "Version of envoy gateway to install"
   type        = string
   nullable    = false
-  default     = "1.8.1"
 }
 
 variable "gatewayclass_name" {

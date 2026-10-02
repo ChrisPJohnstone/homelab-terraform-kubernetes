@@ -42,7 +42,6 @@ variable "miniflux_version" {
   description = "Version of miniflux to install"
   type        = string
   nullable    = false
-  default     = "2.3.3"
 }
 
 variable "gateway_name" {
