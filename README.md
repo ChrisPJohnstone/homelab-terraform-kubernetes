@@ -33,10 +33,10 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 ### Cloudflare setup
 
 - TODO: Script this, in the meantime doc links clicky buttons
+  - API token requires these permissions
+    - Account - Cloudflare Tunnel - Edit
+    - Zone - DNS - Edit
   - [Create API Token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
-    - TODO: Confirm required permissions
-      - Account - Cloudflare Tunnel - Edit
-      - Zone - DNS - Edit
   - [Get Account & Zone ID](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/)
 
 ### Setting Variables

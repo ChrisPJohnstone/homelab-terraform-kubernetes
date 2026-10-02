@@ -39,4 +39,5 @@ module "cloudflare" {
   gateway_ip   = var.gateway_ip
   gateway_port = var.gateway_port
   hostnames    = [module.miniflux.hostname]
+  namespace    = local.namespace
 }
