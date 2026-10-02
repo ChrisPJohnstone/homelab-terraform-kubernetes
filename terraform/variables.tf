@@ -31,7 +31,6 @@ variable "gateway_port" {
   description = "Port for the gateway to listen on"
   type        = string
   nullable    = false
-  sensitive   = false
   default     = 80
 }
 

@@ -31,30 +31,11 @@ module "miniflux" {
   domain         = var.domain
 }
 
-resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnel" {
-  account_id = var.cloudflare_account_id
-  name       = "kubernetes"
-  config_src = "cloudflare"
+module "cloudflare" {
+  depends_on   = [module.miniflux]
+  source       = "./modules/cloudflare/"
+  account_id   = var.cloudflare_account_id
+  gateway_ip   = var.gateway_ip
+  gateway_port = var.gateway_port
+  hostnames    = [module.miniflux.hostname]
 }
-
-resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel" {
-  depends_on = [
-    cloudflare_zero_trust_tunnel_cloudflared.tunnel,
-    module.miniflux,
-  ]
-  account_id = var.cloudflare_account_id
-  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.tunnel.id
-  source     = "cloudflare"
-  config = {
-    ingress = [{
-      hostname = module.miniflux.hostname
-      service  = "http://${var.gateway_ip}:${var.gateway_port}"
-      }, {
-      hostname = null
-      service  = "http_status:404"
-    }]
-  }
-}
-
-# TODO: Deploy cloudfared to cluster
-# TODO: Move cloudflare tunnel to module
