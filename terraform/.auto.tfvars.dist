@@ -1,3 +1,5 @@
+cloudflare_api_token    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
 miniflux_db_host        = "1.1.1.1"
 miniflux_db_password    = "password"
 miniflux_admin_username = "miniflux"

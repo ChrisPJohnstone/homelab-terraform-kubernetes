@@ -4,6 +4,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 ## Tech Stack
 
+- [Cloudflare Tunnel](https://developers.cloudflare.com/tunnel/) Zero trust network tunnel to access your infrastructure publically
 - [Envoy Proxy](https://www.envoyproxy.io/) L4/L7 Proxy
 - [Envoy Gateway](https://gateway.envoyproxy.io/) Kubernetes Gateway API Implementation
 - [MetalLB](https://metallb.io/) Bare-metal load balancer
@@ -13,6 +14,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 ### Pre-Requisites
 
+- A [Cloudflare](https://www.cloudflare.com/) account & your own domain
 - [Terraform](https://developer.hashicorp.com/terraform) Installed
 - A [Kubernetes](https://kubernetes.io/) cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
 - A [PostgreSQL](https://www.postgresql.org/) database. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
@@ -27,6 +29,12 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
   ```sh
   ssh chris@192.168.0.150 'sudo cat /etc/kubernetes/admin.conf' > .kubeconfig
   ```
+
+### Cloudflare setup
+
+- TODO: Script this, in the meantime doc links clicky buttons
+  - [Create API Token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
+- TODO: Confirm required permissions
 
 ### Setting Variables
 

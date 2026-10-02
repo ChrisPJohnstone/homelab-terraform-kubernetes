@@ -1,3 +1,10 @@
+variable "cloudflare_api_token" {
+  description = "API token for connecting to cloudflare"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
 variable "kubeconfig_path" {
   description = "Where to store kubeconfig"
   type        = string
