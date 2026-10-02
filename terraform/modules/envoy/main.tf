@@ -39,7 +39,7 @@ resource "kubernetes_manifest" "envoy_gateway" {
       listeners = [{
         name     = "http"
         protocol = "HTTP"
-        port     = 80
+        port     = var.gateway_port
       }]
     }
   }

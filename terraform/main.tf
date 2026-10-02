@@ -9,9 +9,11 @@ module "metallb" {
 }
 
 module "envoy" {
-  depends_on = [kubernetes_namespace_v1.namespace]
-  source     = "./modules/envoy/"
-  namespace  = local.namespace
+  depends_on   = [kubernetes_namespace_v1.namespace]
+  source       = "./modules/envoy/"
+  namespace    = local.namespace
+  gateway_ip   = var.gateway_ip
+  gateway_port = var.gateway_port
 }
 
 module "miniflux" {
@@ -33,3 +35,22 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnel" {
   name       = "kubernetes"
   config_src = "cloudflare"
 }
+
+resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel" {
+  depends_on = [cloudflare_zero_trust_tunnel_cloudflared.tunnel]
+  account_id = var.cloudflare_account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.tunnel.id
+  source     = "cloudflare"
+  config = {
+    ingress = [{
+      hostname = "miniflux.${var.domain}"
+      service  = "http://${var.gateway_ip}:${var.gateway_port}"
+      }, {
+      hostname = null
+      service  = "http_status:404"
+    }]
+  }
+}
+
+# TODO: Deploy cloudfared to cluster
+# TODO: Move cloudflare tunnel to module

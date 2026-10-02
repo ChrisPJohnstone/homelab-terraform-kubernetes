@@ -19,10 +19,17 @@ variable "gatewayclass_name" {
 }
 
 variable "gateway_ip" {
-  description = "Static IP to assign to the Gateway for MetalLB"
+  description = "Static IP to assign to the Gateway"
   type        = string
   nullable    = false
-  default     = "192.168.0.220"
+  sensitive   = true
+}
+
+variable "gateway_port" {
+  description = "Port for the gateway to listen on"
+  type        = string
+  nullable    = false
+  sensitive   = false
 }
 
 variable "gatewayclass_api_version" {

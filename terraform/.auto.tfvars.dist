@@ -1,5 +1,6 @@
 cloudflare_api_token    = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 cloudflare_account_id   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+domain                  = "homelab.com"
 
 miniflux_db_host        = "1.1.1.1"
 miniflux_db_password    = "password"

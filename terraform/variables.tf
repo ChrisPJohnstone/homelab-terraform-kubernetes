@@ -12,6 +12,29 @@ variable "cloudflare_account_id" {
   sensitive   = true
 }
 
+variable "domain" {
+  description = "Domain for cloudflare tunnel"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "gateway_ip" {
+  description = "Static IP to assign to the Gateway"
+  type        = string
+  nullable    = false
+  sensitive   = true
+  default     = "192.168.0.220"
+}
+
+variable "gateway_port" {
+  description = "Port for the gateway to listen on"
+  type        = string
+  nullable    = false
+  sensitive   = false
+  default     = 80
+}
+
 variable "kubeconfig_path" {
   description = "Where to store kubeconfig"
   type        = string
