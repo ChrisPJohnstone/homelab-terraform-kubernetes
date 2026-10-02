@@ -35,7 +35,10 @@ module "miniflux" {
 }
 
 module "cloudflare" {
-  depends_on          = [module.miniflux]
+  depends_on = [
+    kubernetes_namespace_v1.namespace,
+    module.miniflux,
+  ]
   source              = "./modules/cloudflare/"
   account_id          = var.cloudflare_account_id
   zone_id             = var.cloudflare_zone_id
