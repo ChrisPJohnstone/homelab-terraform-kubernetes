@@ -35,6 +35,7 @@ module "cloudflare" {
   depends_on   = [module.miniflux]
   source       = "./modules/cloudflare/"
   account_id   = var.cloudflare_account_id
+  zone_id      = var.cloudflare_zone_id
   gateway_ip   = var.gateway_ip
   gateway_port = var.gateway_port
   hostnames    = [module.miniflux.hostname]

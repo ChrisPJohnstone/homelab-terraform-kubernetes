@@ -29,7 +29,6 @@ variable "gateway_port" {
   description = "Port for the gateway to listen on"
   type        = string
   nullable    = false
-  sensitive   = false
 }
 
 variable "gatewayclass_api_version" {

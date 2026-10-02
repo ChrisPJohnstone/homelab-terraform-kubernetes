@@ -63,13 +63,11 @@ variable "domain" {
   description = "Domain name to route to the miniflux service"
   type        = string
   nullable    = false
-  sensitive   = true
 }
 
 variable "subdomain" {
   description = "Subdomain to route to the miniflux service"
   type        = string
   nullable    = false
-  sensitive   = true
   default     = "miniflux"
 }

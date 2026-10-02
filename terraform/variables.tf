@@ -12,11 +12,17 @@ variable "cloudflare_account_id" {
   sensitive   = true
 }
 
+variable "cloudflare_zone_id" {
+  description = "Cloudflare zone ID"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
 variable "domain" {
   description = "Domain for cloudflare tunnel"
   type        = string
   nullable    = false
-  sensitive   = true
 }
 
 variable "gateway_ip" {

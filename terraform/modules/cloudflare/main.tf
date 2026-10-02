@@ -23,5 +23,14 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel" {
   }
 }
 
-# TODO: Create DNS record
+resource "cloudflare_dns_record" "tunnel" {
+  for_each = var.hostnames
+  zone_id  = var.zone_id
+  name     = each.value
+  type     = "CNAME"
+  content  = "${cloudflare_zero_trust_tunnel_cloudflared.tunnel.id}.cfargotunnel.com"
+  ttl      = 1
+  proxied  = true
+}
+
 # TODO: Deploy cloudfared to cluster

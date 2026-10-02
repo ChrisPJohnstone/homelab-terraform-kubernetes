@@ -5,6 +5,13 @@ variable "account_id" {
   sensitive   = true
 }
 
+variable "zone_id" {
+  description = "Cloudflare zone ID"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
 variable "tunnel_name" {
   description = "Name to create tunnel under"
   type        = string
@@ -29,5 +36,4 @@ variable "hostnames" {
   description = "Public hostnames to route to the Gateway over the tunnel"
   type        = set(string)
   nullable    = false
-  sensitive   = true
 }
