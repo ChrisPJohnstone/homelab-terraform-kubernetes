@@ -43,3 +43,9 @@ variable "gateway_api_version" {
   nullable    = false
   default     = "gateway.networking.k8s.io/v1"
 }
+
+variable "service_namespace" {
+  description = "Namespace to which contains services"
+  type        = string
+  nullable    = false
+}

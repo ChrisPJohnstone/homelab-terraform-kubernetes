@@ -1,8 +1,7 @@
 variable "namespace" {
-  description = "Name to create namespace under"
+  description = "Namespace to deploy service in"
   type        = string
   nullable    = false
-  default     = "homelab"
 }
 
 variable "db_host" {
@@ -52,10 +51,9 @@ variable "gateway_name" {
 }
 
 variable "gateway_namespace" {
-  description = "Namespace of the Gateway to attach the miniflux HTTPRoute to"
+  description = "Namespace that the Gateway is deployed in"
   type        = string
   nullable    = false
-  default     = "homelab"
 }
 
 variable "domain" {

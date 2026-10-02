@@ -40,6 +40,18 @@ resource "kubernetes_manifest" "envoy_gateway" {
         name     = "http"
         protocol = "HTTP"
         port     = var.gateway_port
+        allowedRoutes = {
+          namespaces = {
+            from = "Selector"
+            selector = {
+              matchExpressions = [{
+                key      = "kubernetes.io/metadata.name"
+                operator = "In"
+                values   = [var.service_namespace]
+              }]
+            }
+          }
+        }
       }]
     }
   }

@@ -47,11 +47,18 @@ variable "kubeconfig_path" {
   default     = "../.kubeconfig"
 }
 
-variable "namespace" {
-  description = "Name to create namespace under"
+variable "network_namespace" {
+  description = "Namespaces to create for networking pods"
   type        = string
   nullable    = false
-  default     = "homelab"
+  default     = "networking"
+}
+
+variable "service_namespace" {
+  description = "Namespaces to create for services"
+  type        = string
+  nullable    = false
+  default     = "services"
 }
 
 variable "envoy_gateway_version" {
