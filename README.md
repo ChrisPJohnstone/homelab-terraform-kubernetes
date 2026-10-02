@@ -34,7 +34,9 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 - TODO: Script this, in the meantime doc links clicky buttons
   - [Create API Token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
-- TODO: Confirm required permissions
+    - TODO: Confirm required permissions
+      - Account - Cloudflare Tunnel - Edit
+  - [Get Account ID](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/)- [Get Account ID](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/)
 
 ### Setting Variables
 

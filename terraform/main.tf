@@ -27,3 +27,9 @@ module "miniflux" {
   admin_password = var.miniflux_admin_password
   gateway_name   = module.envoy.gateway_name
 }
+
+resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnel" {
+  account_id = var.cloudflare_account_id
+  name       = "kubernetes"
+  config_src = "cloudflare"
+}

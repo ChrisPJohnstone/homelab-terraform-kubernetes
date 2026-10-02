@@ -5,6 +5,13 @@ variable "cloudflare_api_token" {
   sensitive   = true
 }
 
+variable "cloudflare_account_id" {
+  description = "Cloudflare account ID"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
 variable "kubeconfig_path" {
   description = "Where to store kubeconfig"
   type        = string
