@@ -15,7 +15,10 @@ module "envoy" {
 }
 
 module "miniflux" {
-  depends_on     = [kubernetes_namespace_v1.namespace]
+  depends_on = [
+    kubernetes_namespace_v1.namespace,
+    module.envoy,
+  ]
   source         = "./modules/miniflux/"
   namespace      = local.namespace
   db_host        = var.miniflux_db_host
