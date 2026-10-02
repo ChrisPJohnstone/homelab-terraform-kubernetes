@@ -103,7 +103,7 @@ resource "kubernetes_manifest" "miniflux_httproute" {
         name      = var.gateway_name
         namespace = var.gateway_namespace
       }]
-      hostnames = [var.hostname]
+      hostnames = [local.hostname]
       rules = [{
         backendRefs = [{
           name = kubernetes_service_v1.miniflux.metadata[0].name

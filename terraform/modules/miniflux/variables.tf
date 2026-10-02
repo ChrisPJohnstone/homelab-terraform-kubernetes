@@ -59,9 +59,17 @@ variable "gateway_namespace" {
   default     = "homelab"
 }
 
-variable "hostname" {
-  description = "Hostname to route to the miniflux service"
+variable "domain" {
+  description = "Domain name to route to the miniflux service"
   type        = string
   nullable    = false
-  default     = "miniflux.home.lab"
+  sensitive   = true
+}
+
+variable "subdomain" {
+  description = "Subdomain to route to the miniflux service"
+  type        = string
+  nullable    = false
+  sensitive   = true
+  default     = "miniflux"
 }

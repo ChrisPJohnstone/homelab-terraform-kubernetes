@@ -28,6 +28,7 @@ module "miniflux" {
   admin_username = var.miniflux_admin_username
   admin_password = var.miniflux_admin_password
   gateway_name   = module.envoy.gateway_name
+  domain         = var.domain
 }
 
 resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnel" {
@@ -37,13 +38,16 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnel" {
 }
 
 resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel" {
-  depends_on = [cloudflare_zero_trust_tunnel_cloudflared.tunnel]
+  depends_on = [
+    cloudflare_zero_trust_tunnel_cloudflared.tunnel,
+    module.miniflux,
+  ]
   account_id = var.cloudflare_account_id
   tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.tunnel.id
   source     = "cloudflare"
   config = {
     ingress = [{
-      hostname = "miniflux.${var.domain}"
+      hostname = module.miniflux.hostname
       service  = "http://${var.gateway_ip}:${var.gateway_port}"
       }, {
       hostname = null
