@@ -4,10 +4,15 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 ## Tech Stack
 
+#### Networking
+
 - [Cloudflare Tunnel](https://developers.cloudflare.com/tunnel/) Zero trust network tunnel to access your infrastructure publically
 - [Envoy Proxy](https://www.envoyproxy.io/) L4/L7 Proxy
 - [Envoy Gateway](https://gateway.envoyproxy.io/) Kubernetes Gateway API Implementation
 - [MetalLB](https://metallb.io/) Bare-metal load balancer
+
+#### Services
+
 - [Miniflux](https://miniflux.app/) A minimalists & opinionated feed reader
 
 ## Usage
