@@ -22,7 +22,9 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 - A [Cloudflare](https://www.cloudflare.com/) account & your own domain
 - [Terraform](https://developer.hashicorp.com/terraform) Installed
 - A [Kubernetes](https://kubernetes.io/) cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
-- A [PostgreSQL](https://www.postgresql.org/) database. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
+- A [PostgreSQL](https://www.postgresql.org/) database.
+  - A user for the `miniflux` service which owns a database called `miniflux`
+  - For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
 
 ### Get kubeconfig
 
