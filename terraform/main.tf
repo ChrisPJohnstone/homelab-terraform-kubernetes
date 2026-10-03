@@ -10,14 +10,14 @@ module "metallb" {
   depends_on      = [kubernetes_namespace_v1.network_namespace]
   source          = "./modules/metallb/"
   namespace       = local.network_namespace
-  metallb_version = "0.16.1"
+  metallb_version = var.metallb_version
 }
 
 module "envoy" {
   depends_on            = [kubernetes_namespace_v1.network_namespace]
   source                = "./modules/envoy/"
   namespace             = local.network_namespace
-  envoy_gateway_version = "1.8.1"
+  envoy_gateway_version = var.envoy_gateway_version
   gateway_ip            = var.gateway_ip
   gateway_port          = var.gateway_port
   service_namespace     = local.service_namespace
@@ -30,7 +30,7 @@ module "miniflux" {
   ]
   source            = "./modules/miniflux/"
   namespace         = local.service_namespace
-  miniflux_version  = "2.3.3"
+  miniflux_version  = var.miniflux_version
   db_host           = var.miniflux_db_host
   db_password       = var.miniflux_db_password
   admin_username    = var.miniflux_admin_username
@@ -52,5 +52,5 @@ module "cloudflare" {
   gateway_port        = var.gateway_port
   hostnames           = [module.miniflux.hostname]
   namespace           = local.network_namespace
-  cloudflared_version = "2026.9.3"
+  cloudflared_version = var.cloudflare_account_id
 }

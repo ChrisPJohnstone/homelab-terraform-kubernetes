@@ -61,11 +61,32 @@ variable "service_namespace" {
   default     = "services"
 }
 
+variable "metallb_version" {
+  description = "Version of metallb to install"
+  type        = string
+  nullable    = false
+  default     = "0.16.1"
+}
+
 variable "envoy_gateway_version" {
   description = "Version of envoy gateway to install"
   type        = string
   nullable    = false
   default     = "1.8.1"
+}
+
+variable "cloudflared_version" {
+  description = "Version of cloudflared to install"
+  type        = string
+  nullable    = false
+  default     = "2026.9.3"
+}
+
+variable "miniflux_version" {
+  description = "Version of miniflux to install"
+  type        = string
+  nullable    = false
+  default     = "2.3.3"
 }
 
 variable "miniflux_db_host" {
