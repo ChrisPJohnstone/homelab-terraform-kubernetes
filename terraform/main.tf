@@ -31,8 +31,7 @@ module "miniflux" {
   source            = "./modules/miniflux/"
   namespace         = local.service_namespace
   miniflux_version  = var.miniflux_version
-  db_host           = var.miniflux_db_host
-  db_password       = var.miniflux_db_password
+  db_host           = var.postgres_host
   admin_username    = var.miniflux_admin_username
   admin_password    = var.miniflux_admin_password
   gateway_name      = module.envoy.gateway_name
@@ -52,5 +51,5 @@ module "cloudflare" {
   gateway_port        = var.gateway_port
   hostnames           = [module.miniflux.hostname]
   namespace           = local.network_namespace
-  cloudflared_version = var.cloudflare_account_id
+  cloudflared_version = var.cloudflared_version
 }

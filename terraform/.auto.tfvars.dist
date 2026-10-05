@@ -3,7 +3,14 @@ cloudflare_account_id   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 cloudflare_zone_id      = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 domain                  = "homelab.com"
 
-miniflux_db_host        = "1.1.1.1"
-miniflux_db_password    = "password"
-miniflux_admin_username = "miniflux"
+postgres_host           = "1.1.1.1"
+postgres_username       = "username"
+postgres_password       = "password"
+
+metallb_version         = "0.16.1"
+envoy_gateway_version   = "1.8.1"
+cloudflared_version     = "2026.9.3"
+
+miniflux_version        = "2.3.3"
+miniflux_admin_username = "username"
 miniflux_admin_password = "password"

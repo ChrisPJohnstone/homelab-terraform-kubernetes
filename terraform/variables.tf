@@ -19,6 +19,42 @@ variable "cloudflare_zone_id" {
   sensitive   = true
 }
 
+variable "kubeconfig_path" {
+  description = "Where to store kubeconfig"
+  type        = string
+  nullable    = false
+  default     = "../.kubeconfig"
+}
+
+variable "postgres_host" {
+  description = "Path to postgres host"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "postgres_port" {
+  description = "Port to connecto to postgres on"
+  type        = number
+  nullable    = false
+  sensitive   = true
+  default     = 5432
+}
+
+variable "postgres_username" {
+  description = "Username to connect to postgres"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "postgres_password" {
+  description = "Password to connect to postgres"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
 variable "domain" {
   description = "Domain for cloudflare tunnel"
   type        = string
@@ -40,13 +76,6 @@ variable "gateway_port" {
   default     = 80
 }
 
-variable "kubeconfig_path" {
-  description = "Where to store kubeconfig"
-  type        = string
-  nullable    = false
-  default     = "../.kubeconfig"
-}
-
 variable "network_namespace" {
   description = "Namespaces to create for networking pods"
   type        = string
@@ -65,41 +94,24 @@ variable "metallb_version" {
   description = "Version of metallb to install"
   type        = string
   nullable    = false
-  default     = "0.16.1"
 }
 
 variable "envoy_gateway_version" {
   description = "Version of envoy gateway to install"
   type        = string
   nullable    = false
-  default     = "1.8.1"
 }
 
 variable "cloudflared_version" {
   description = "Version of cloudflared to install"
   type        = string
   nullable    = false
-  default     = "2026.9.3"
 }
 
 variable "miniflux_version" {
   description = "Version of miniflux to install"
   type        = string
   nullable    = false
-  default     = "2.3.3"
-}
-
-variable "miniflux_db_host" {
-  description = "Host address for miniflux database"
-  type        = string
-  nullable    = false
-}
-
-variable "miniflux_db_password" {
-  description = "Password for miniflux database user"
-  type        = string
-  nullable    = false
-  sensitive   = true
 }
 
 variable "miniflux_admin_username" {

@@ -19,39 +19,37 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 ### Pre-Requisites
 
+- A [Kubernetes](https://kubernetes.io/) cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
+- A [PostgreSQL](https://www.postgresql.org/) database. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
 - A [Cloudflare](https://www.cloudflare.com/) account & your own domain
 - [Terraform](https://developer.hashicorp.com/terraform) Installed
-- A [Kubernetes](https://kubernetes.io/) cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
-- A [PostgreSQL](https://www.postgresql.org/) database.
-  - A user for the `miniflux` service which owns a database called `miniflux`
-  - For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
 
 ### Get kubeconfig
 
 - Pull the kubeconfig from your control plane
-  ```sh
-  ssh {username}@{host}:'sudo cat {path_to_config}' > .kubeconfig
-  ```
-  Example
-  ```sh
-  ssh chris@192.168.0.150 'sudo cat /etc/kubernetes/admin.conf' > .kubeconfig
-  ```
+    ```sh
+    ssh {username}@{host}:'sudo cat {path_to_config}' > .kubeconfig
+    ```
+    Example
+    ```sh
+    ssh chris@192.168.0.150 'sudo cat /etc/kubernetes/admin.conf' > .kubeconfig
+    ```
 
 ### Cloudflare setup
 
 - TODO: Script this, in the meantime doc links clicky buttons
-  - API token requires these permissions
-    - Account - Cloudflare Tunnel - Edit
-    - Zone - DNS - Edit
-  - [Create API Token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
-  - [Get Account & Zone ID](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/)
+    - API token requires these permissions
+        - Account - Cloudflare Tunnel - Edit
+        - Zone - DNS - Edit
+    - [Create API Token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
+    - [Get Account & Zone ID](https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/)
 
 ### Setting Variables
 
 - Copy [`terraform/.auto.tfvars.dist`](./terraform/.auto.tfvars.dist) to `terraform/.auto.tfvars`
-  ```sh
-  cp terraform/.auto.tfvars.dist terraform/.auto.tfvars
-  ```
+    ```sh
+    cp terraform/.auto.tfvars.dist terraform/.auto.tfvars
+    ```
 - Update the values in `terraform/.auto.tfvars`
 
 ### Managing Resources
@@ -60,10 +58,10 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 > All commands should be run from [terraform](./terraform/) directory
 
 - Deploy Resources
-  ```sh
-  ./deploy
-  ```
+    ```sh
+    ./deploy
+    ```
 - Destroy Resources
-  ```sh
-  terraform destroy
-  ```
+    ```sh
+    terraform destroy
+    ```

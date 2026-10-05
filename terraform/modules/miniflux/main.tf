@@ -1,16 +1,43 @@
+resource "random_password" "db_user_password" {
+  keepers = {
+    version = var.password_version
+  }
+  length      = 16
+  min_lower   = 2
+  min_upper   = 2
+  min_numeric = 2
+  min_special = 2
+}
+
+resource "postgresql_role" "miniflux" {
+  depends_on          = [random_password.db_user_password]
+  login               = true
+  name                = "miniflux"
+  password_wo         = local.db_password
+  password_wo_version = var.password_version # Needs to be changed for password to be updated
+}
+
+resource "postgresql_database" "miniflux" {
+  depends_on = [postgresql_role.miniflux]
+  name       = "miniflux"
+  owner      = postgresql_role.miniflux.id
+}
+
 resource "kubernetes_secret_v1" "miniflux" {
+  depends_on = [postgresql_database.miniflux]
   metadata {
     namespace = var.namespace
     name      = "miniflux"
   }
   data = {
-    db_password    = var.db_password
-    database_url   = "postgres://miniflux:${var.db_password}@${var.db_host}/miniflux?sslmode=${var.db_ssl}"
+    db_password    = local.db_password
+    database_url   = "postgres://miniflux:${urlencode(local.db_password)}@${var.db_host}/miniflux?sslmode=${var.db_ssl}"
     admin_password = var.admin_password
   }
 }
 
 resource "kubernetes_deployment_v1" "miniflux" {
+  depends_on = [kubernetes_secret_v1.miniflux]
   metadata {
     namespace = var.namespace
     name      = "miniflux"
@@ -72,6 +99,7 @@ resource "kubernetes_deployment_v1" "miniflux" {
 }
 
 resource "kubernetes_service_v1" "miniflux" {
+  depends_on = [kubernetes_deployment_v1.miniflux]
   metadata {
     namespace = var.namespace
     name      = "miniflux"
@@ -91,6 +119,7 @@ resource "kubernetes_service_v1" "miniflux" {
 }
 
 resource "kubernetes_manifest" "miniflux_httproute" {
+  depends_on = [kubernetes_service_v1.miniflux]
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "HTTPRoute"

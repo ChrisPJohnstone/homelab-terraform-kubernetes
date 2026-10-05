@@ -10,13 +10,6 @@ variable "db_host" {
   nullable    = false
 }
 
-variable "db_password" {
-  description = "Password for miniflux database user"
-  type        = string
-  nullable    = false
-  sensitive   = true
-}
-
 variable "db_ssl" {
   description = "Wether to use to use SSL for miniflux database connection"
   type        = string
@@ -67,4 +60,11 @@ variable "subdomain" {
   type        = string
   nullable    = false
   default     = "miniflux"
+}
+
+variable "password_version" {
+  description = "Password resources can't track state properly while protecting password, to update password change this string"
+  type        = string
+  nullable    = false
+  default     = "one"
 }
