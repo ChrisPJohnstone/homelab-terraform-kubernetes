@@ -35,7 +35,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
     ssh chris@192.168.0.150 'sudo cat /etc/kubernetes/admin.conf' > .kubeconfig
     ```
 
-### Cloudflare setup
+### Cloudflare API Token
 
 - TODO: Script this, in the meantime doc links clicky buttons
     - API token requires these permissions
