@@ -57,6 +57,10 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
             mount_path = "/data"
           }
           env {
+            name  = "DOMAIN"
+            value = "https://${local.hostname}"
+          }
+          env {
             name  = "SMTP_HOST"
             value = var.smtp_host
           }
