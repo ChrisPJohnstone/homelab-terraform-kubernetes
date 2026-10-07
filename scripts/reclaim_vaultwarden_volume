@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+function reclaim-old-pod() {
+    # 1. Stop the pod (it's writing to the empty volume; also releases the PVC)
+    kubectl -n services scale deploy/vaultwarden --replicas=0
+    kubectl -n services wait --for=delete pod -l app=vaultwarden --timeout=60s
+
+    # 2. Delete the new empty PVC and wait until it's fully gone
+    kubectl -n services delete pvc vaultwarden-data
+    kubectl -n services wait --for=delete pvc/vaultwarden-data --timeout=60s
+
+    # 3. Remove the orphan PV and its empty Longhorn volume
+    kubectl delete pv pvc-6473651c-2ef1-49c5-857e-65f8f2b65570
+    kubectl -n longhorn delete volumes.longhorn.io pvc-6473651c-2ef1-49c5-857e-65f8f2b65570
+
+    # 4. Unbind the retained PV (keep namespace/name, drop uid + resourceVersion)
+    kubectl patch pv pvc-2ea46fcc-8759-44b1-ad5b-67e1f112f48d --type json \
+        -p '[{"op":"remove","path":"/spec/claimRef/uid"},{"op":"remove","path":"/spec/claimRef/resourceVersion"}]'
+
+    # 5. Recreate the PVC via Terraform — binds to the old PV, old volume reattaches
+    terraform -chdir=terraform apply
+
+    # 6. Verify
+    kubectl -n longhorn get volumes.longhorn.io   # pvc-2ea46fcc… attached + healthy
+    kubectl -n services get pvc vaultwarden-data  # Bound to pvc-2ea46fcc…
+    kubectl -n services exec deploy/vaultwarden -- ls -la /data
+}
+
+echo "Script is currently just a reference, TODO: Implement proper script"
