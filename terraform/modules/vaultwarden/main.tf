@@ -1,6 +1,3 @@
-# TODO: Create user and disable signups
-# TODO: Move to Postgres database
-
 resource "random_password" "db_password" {
   keepers = {
     version = var.db_password_version
