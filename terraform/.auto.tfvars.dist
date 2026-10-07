@@ -11,7 +11,4 @@ metallb_version         = "0.16.1"
 envoy_gateway_version   = "1.8.1"
 cloudflared_version     = "2026.9.3"
 longhorn_version        = "1.13.0"
-
 miniflux_version        = "2.3.3"
-miniflux_admin_username = "username"
-miniflux_admin_password = "password"

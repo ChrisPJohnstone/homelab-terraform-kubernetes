@@ -44,7 +44,6 @@ module "miniflux" {
   miniflux_version  = var.miniflux_version
   db_host           = var.postgres_host
   admin_username    = var.miniflux_admin_username
-  admin_password    = var.miniflux_admin_password
   gateway_name      = module.envoy.gateway_name
   gateway_namespace = module.envoy.gateway_namespace
   domain            = var.domain

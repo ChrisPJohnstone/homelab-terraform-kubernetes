@@ -1,6 +1,17 @@
-resource "random_password" "db_user_password" {
+resource "random_password" "db_password" {
   keepers = {
-    version = var.password_version
+    version = var.db_password_version
+  }
+  length      = 16
+  min_lower   = 2
+  min_upper   = 2
+  min_numeric = 2
+  min_special = 2
+}
+
+resource "random_password" "admin_password" {
+  keepers = {
+    version = var.admin_password_version
   }
   length      = 16
   min_lower   = 2
@@ -10,11 +21,11 @@ resource "random_password" "db_user_password" {
 }
 
 resource "postgresql_role" "miniflux" {
-  depends_on          = [random_password.db_user_password]
+  depends_on          = [random_password.db_password]
   login               = true
   name                = "miniflux"
   password_wo         = local.db_password
-  password_wo_version = var.password_version # Needs to be changed for password to be updated
+  password_wo_version = var.db_password_version # Needs to be changed for password to be updated
 }
 
 resource "postgresql_database" "miniflux" {
@@ -32,7 +43,7 @@ resource "kubernetes_secret_v1" "miniflux" {
   data = {
     db_password    = local.db_password
     database_url   = "postgres://miniflux:${urlencode(local.db_password)}@${var.db_host}/miniflux?sslmode=${var.db_ssl}"
-    admin_password = var.admin_password
+    admin_password = local.admin_password
   }
 }
 

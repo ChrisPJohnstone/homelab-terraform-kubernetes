@@ -23,13 +23,6 @@ variable "admin_username" {
   nullable    = false
 }
 
-variable "admin_password" {
-  description = "Password to give miniflux admin user"
-  type        = string
-  nullable    = false
-  sensitive   = true
-}
-
 variable "miniflux_version" {
   description = "Version of miniflux to install"
   type        = string
@@ -62,7 +55,14 @@ variable "subdomain" {
   default     = "miniflux"
 }
 
-variable "password_version" {
+variable "db_password_version" {
+  description = "Password resources can't track state properly while protecting password, to update password change this string"
+  type        = string
+  nullable    = false
+  default     = "one"
+}
+
+variable "admin_password_version" {
   description = "Password resources can't track state properly while protecting password, to update password change this string"
   type        = string
   nullable    = false

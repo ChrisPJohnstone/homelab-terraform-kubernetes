@@ -131,11 +131,5 @@ variable "miniflux_admin_username" {
   description = "Username to give miniflux admin user"
   type        = string
   nullable    = false
-}
-
-variable "miniflux_admin_password" {
-  description = "Password to give miniflux admin user"
-  type        = string
-  nullable    = false
-  sensitive   = true
+  default     = "admin"
 }
