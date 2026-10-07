@@ -54,6 +54,7 @@ module "vaultwarden" {
   smtp_username       = var.smtp_username
   smtp_password       = var.smtp_password
   smtp_from_email     = var.smtp_from_email
+  enable_admin_panel  = var.vaultwarden_enable_admin_panel
 }
 
 module "miniflux" {

@@ -12,6 +12,17 @@ resource "random_password" "db_password" {
   min_special = 2
 }
 
+resource "random_password" "admin_token" {
+  keepers = {
+    version = var.admin_token_version
+  }
+  length      = 16
+  min_lower   = 2
+  min_upper   = 2
+  min_numeric = 2
+  min_special = 2
+}
+
 resource "postgresql_role" "vaultwarden" {
   depends_on          = [random_password.db_password]
   login               = true
@@ -34,6 +45,7 @@ resource "kubernetes_secret_v1" "vaultwarden" {
   }
   data = {
     database_url = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
+    admin_token  = local.admin_token
   }
 }
 
@@ -69,7 +81,7 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
     }
   }
   spec {
-    replicas = 1
+    replicas = 1 # TODO: Implement HA
     selector {
       match_labels = {
         app = "vaultwarden"
@@ -107,6 +119,22 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
                 key  = "database_url"
               }
             }
+          }
+          dynamic "env" {
+            for_each = var.enable_admin_panel ? [1] : []
+            content {
+              name = "ADMIN_TOKEN"
+              value_from {
+                secret_key_ref {
+                  name = kubernetes_secret_v1.vaultwarden.metadata[0].name
+                  key  = "admin_token"
+                }
+              }
+            }
+          }
+          env {
+            name  = "SIGNUPS_ALLOWED"
+            value = false
           }
           env {
             name  = "SMTP_HOST"

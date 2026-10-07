@@ -129,3 +129,17 @@ variable "smtp_from_name" {
   nullable    = false
   default     = "vaultwarden"
 }
+
+variable "admin_token_version" {
+  description = "Password resources can't track state properly while protecting password, to update password change this string"
+  type        = string
+  nullable    = false
+  default     = "one"
+}
+
+variable "enable_admin_panel" {
+  description = "Toggle enabling admin panel"
+  type        = bool
+  nullable    = false
+  default     = false
+}

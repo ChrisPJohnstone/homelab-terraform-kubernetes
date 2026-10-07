@@ -169,6 +169,13 @@ variable "vaultwarden_version" {
   nullable    = false
 }
 
+variable "vaultwarden_enable_admin_panel" {
+  description = "Toggle enabling vaultwarden admin panel"
+  type        = bool
+  nullable    = false
+  default     = false
+}
+
 variable "miniflux_version" {
   description = "Version of miniflux to install"
   type        = string
