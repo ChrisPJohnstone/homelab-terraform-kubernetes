@@ -11,6 +11,10 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 - [Envoy Gateway](https://gateway.envoyproxy.io/) Kubernetes Gateway API Implementation
 - [MetalLB](https://metallb.io/) Bare-metal load balancer
 
+#### Storage
+
+- [Longhorn](https://longhorn.io/) Distributed block storage, installed as the default StorageClass
+
 #### Services
 
 - [Miniflux](https://miniflux.app/) A minimalists & opinionated feed reader
@@ -20,6 +24,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 ### Pre-Requisites
 
 - A [Kubernetes](https://kubernetes.io/) cluster. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox).
+    - `open-iscsi` & `nfs-common` installed on each node that will host replicas, with `iscsid` running
 - A [PostgreSQL](https://www.postgresql.org/) database. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
 - A [Cloudflare](https://www.cloudflare.com/) account & your own domain
 - [Terraform](https://developer.hashicorp.com/terraform) Installed

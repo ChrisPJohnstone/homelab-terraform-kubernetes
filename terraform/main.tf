@@ -6,6 +6,10 @@ resource "kubernetes_namespace_v1" "service_namespace" {
   metadata { name = var.service_namespace }
 }
 
+resource "kubernetes_namespace_v1" "longhorn_namespace" {
+  metadata { name = var.longhorn_namespace }
+}
+
 module "metallb" {
   depends_on      = [kubernetes_namespace_v1.network_namespace]
   source          = "./modules/metallb/"
@@ -21,6 +25,13 @@ module "envoy" {
   gateway_ip            = var.gateway_ip
   gateway_port          = var.gateway_port
   service_namespace     = local.service_namespace
+}
+
+module "longhorn" {
+  depends_on       = [kubernetes_namespace_v1.longhorn_namespace]
+  source           = "./modules/longhorn/"
+  namespace        = local.longhorn_namespace
+  longhorn_version = var.longhorn_version
 }
 
 module "miniflux" {

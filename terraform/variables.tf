@@ -90,6 +90,19 @@ variable "service_namespace" {
   default     = "services"
 }
 
+variable "longhorn_namespace" {
+  description = "Namespace to create for Longhorn"
+  type        = string
+  nullable    = false
+  default     = "longhorn"
+}
+
+variable "longhorn_version" {
+  description = "Version of Longhorn to install"
+  type        = string
+  nullable    = false
+}
+
 variable "metallb_version" {
   description = "Version of metallb to install"
   type        = string
