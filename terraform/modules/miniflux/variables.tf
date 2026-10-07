@@ -49,11 +49,25 @@ variable "db_ssl" {
   default     = "disable"
 }
 
+variable "db_username" {
+  description = "Username to use for database connection"
+  type        = string
+  nullable    = false
+  default     = "miniflux"
+}
+
 variable "db_password_version" {
   description = "Password resources can't track state properly while protecting password, to update password change this string"
   type        = string
   nullable    = false
   default     = "one"
+}
+
+variable "db_name" {
+  description = "Name to create database as"
+  type        = string
+  nullable    = false
+  default     = "miniflux"
 }
 
 variable "admin_username" {
