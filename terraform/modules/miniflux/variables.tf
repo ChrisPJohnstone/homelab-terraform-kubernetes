@@ -4,33 +4,8 @@ variable "namespace" {
   nullable    = false
 }
 
-variable "db_host" {
-  description = "Host address for miniflux database"
-  type        = string
-  nullable    = false
-}
-
-variable "db_ssl" {
-  description = "Wether to use to use SSL for miniflux database connection"
-  type        = string
-  nullable    = false
-  default     = "disable"
-}
-
-variable "admin_username" {
-  description = "Username to give miniflux admin user"
-  type        = string
-  nullable    = false
-}
-
-variable "miniflux_version" {
-  description = "Version of miniflux to install"
-  type        = string
-  nullable    = false
-}
-
 variable "gateway_name" {
-  description = "Name of the Gateway to attach the miniflux HTTPRoute to"
+  description = "Name of the Gateway to attach the HTTPRoute to"
   type        = string
   nullable    = false
   default     = "envoy-gateway"
@@ -43,16 +18,35 @@ variable "gateway_namespace" {
 }
 
 variable "domain" {
-  description = "Domain name to route to the miniflux service"
+  description = "Domain name to route to the service"
   type        = string
   nullable    = false
 }
 
 variable "subdomain" {
-  description = "Subdomain to route to the miniflux service"
+  description = "Subdomain to route to the service"
   type        = string
   nullable    = false
   default     = "miniflux"
+}
+
+variable "miniflux_version" {
+  description = "Version of miniflux to install"
+  type        = string
+  nullable    = false
+}
+
+variable "db_host" {
+  description = "Host address for the database"
+  type        = string
+  nullable    = false
+}
+
+variable "db_ssl" {
+  description = "Wether to use to use SSL for the database connection"
+  type        = string
+  nullable    = false
+  default     = "disable"
 }
 
 variable "db_password_version" {
@@ -60,6 +54,12 @@ variable "db_password_version" {
   type        = string
   nullable    = false
   default     = "one"
+}
+
+variable "admin_username" {
+  description = "Username to give admin user"
+  type        = string
+  nullable    = false
 }
 
 variable "admin_password_version" {

@@ -41,12 +41,12 @@ module "miniflux" {
   ]
   source            = "./modules/miniflux/"
   namespace         = local.service_namespace
-  miniflux_version  = var.miniflux_version
-  db_host           = var.postgres_host
-  admin_username    = var.miniflux_admin_username
   gateway_name      = module.envoy.gateway_name
   gateway_namespace = module.envoy.gateway_namespace
   domain            = var.domain
+  miniflux_version  = var.miniflux_version
+  db_host           = var.postgres_host
+  admin_username    = var.miniflux_admin_username
 }
 
 module "cloudflare" {
