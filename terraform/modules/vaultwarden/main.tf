@@ -1,6 +1,28 @@
 # TODO: Create user and disable signups
+# TODO: Move to Postgres database
+# TODO: Set up SMTP
+
+resource "kubernetes_persistent_volume_claim_v1" "vaultwarden_data" {
+  metadata {
+    namespace = var.namespace
+    name      = "vaultwarden-data"
+    labels = {
+      app = "vaultwarden"
+    }
+  }
+  spec {
+    access_modes       = ["ReadWriteOnce"]
+    storage_class_name = var.storage_class_name
+    resources {
+      requests = {
+        storage = var.storage_size
+      }
+    }
+  }
+}
 
 resource "kubernetes_deployment_v1" "vaultwarden" {
+  depends_on = [kubernetes_persistent_volume_claim_v1.vaultwarden_data]
   metadata {
     namespace = var.namespace
     name      = "vaultwarden"
@@ -9,7 +31,7 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
     }
   }
   spec {
-    replicas = 2
+    replicas = 1
     selector {
       match_labels = {
         app = "vaultwarden"
@@ -22,13 +44,18 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
         }
       }
       spec {
+        volume {
+          name = "data"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.vaultwarden_data.metadata[0].name
+          }
+        }
         container {
           name  = "vaultwarden"
           image = "docker.io/vaultwarden/server:${var.vaultwarden_version}"
-          # TODO: Configure persistent storage
-          env {
-            name  = "I_REALLY_WANT_VOLATILE_STORAGE"
-            value = true
+          volume_mount {
+            name       = "data"
+            mount_path = "/data"
           }
         }
       }

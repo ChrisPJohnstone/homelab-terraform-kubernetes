@@ -15,5 +15,9 @@ resource "helm_release" "longhorn_release" {
       name  = "persistence.defaultClassReplicaCount"
       value = tostring(var.replica_count)
     },
+    {
+      name  = "persistence.reclaimPolicy"
+      value = "Retain"
+    },
   ]
 }

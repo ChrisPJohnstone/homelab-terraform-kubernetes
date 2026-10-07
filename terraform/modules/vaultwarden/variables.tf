@@ -35,3 +35,17 @@ variable "vaultwarden_version" {
   type        = string
   nullable    = false
 }
+
+variable "storage_class_name" {
+  description = "StorageClass for Vaultwarden PVC"
+  type        = string
+  nullable    = false
+  default     = "longhorn"
+}
+
+variable "storage_size" {
+  description = "PVC size for Vaultwarden data"
+  type        = string
+  nullable    = false
+  default     = "5Gi"
+}
