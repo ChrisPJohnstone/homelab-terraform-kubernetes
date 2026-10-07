@@ -59,14 +59,5 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 ### Managing Resources
 
-> [!NOTE]
-> All commands should be run from [terraform](./terraform/) directory
-
-- Deploy Resources
-    ```sh
-    ./deploy
-    ```
-- Destroy Resources
-    ```sh
-    terraform destroy
-    ```
+- [Deploy Resources](./deploy)
+- [Destroy Resources](./destroy)

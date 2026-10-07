@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+function deploy() {
+    local TERRAFORM_DIR="./terraform"
+
+    [[ ! -d "${TERRAFORM_DIR}/.terraform" ]] && terraform -chdir="${TERRAFORM_DIR}" init
+    if ! terraform -chdir="${TERRAFORM_DIR}" state list "module.metallb.helm_release.metallb_release" &> /dev/null; then
+        terraform -chdir="${TERRAFORM_DIR}" apply "${@}" \
+            -target="module.metallb.helm_release.metallb_release" \
+            -target="module.envoy.helm_release.envoy_gateway_release"
+    fi
+    terraform -chdir="${TERRAFORM_DIR}" apply "${@}"
+}
+
+deploy "${@}"

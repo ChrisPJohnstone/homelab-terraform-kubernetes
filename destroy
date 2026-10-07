@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+function destroy() {
+    local TERRAFORM_DIR="./terraform"
+
+    local longhorn_confirmation_flag
+    longhorn_confirmation_flag=${ kubectl -n longhorn get settings.longhorn.io deleting-confirmation-flag -o jsonpath='{.value}' 2> /dev/null; }
+    if [[ "${longhorn_confirmation_flag}" == 'false' ]]; then
+        echo "Longhorn is currently configured to block deletion. To disable this behaviour run the following command and try again"
+        echo "kubectl -n longhorn patch settings.longhorn.io deleting-confirmation-flag --type=merge -p '{\"value\":\"true\"}'"
+        exit 1
+    fi
+    terraform -chdir="${TERRAFORM_DIR}" destroy "${@}"
+}
+
+destroy "${@}"
