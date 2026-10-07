@@ -49,3 +49,49 @@ variable "storage_size" {
   nullable    = false
   default     = "5Gi"
 }
+
+variable "smtp_host" {
+  description = "Host to connect to SMTP server"
+  type        = string
+  nullable    = false
+}
+
+variable "smtp_port" {
+  description = "Port to connect to SMTP server on"
+  type        = number
+  nullable    = false
+}
+
+variable "smtp_security" {
+  description = "Security protocol for SMTP server"
+  type        = string
+  nullable    = false
+}
+
+variable "smtp_username" {
+  description = "Username to log in to SMTP server"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "smtp_password" {
+  description = "Password to log in to SMTP server"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "smtp_from_email" {
+  description = "Email address to show emails from"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "smtp_from_name" {
+  description = "Name to show emails from"
+  type        = string
+  nullable    = false
+  default     = "vaultwarden"
+}

@@ -47,6 +47,12 @@ module "vaultwarden" {
   domain              = var.domain
   subdomain           = "wip" # TODO: Migrate & Remove
   vaultwarden_version = var.vaultwarden_version
+  smtp_host           = var.smtp_host
+  smtp_port           = var.smtp_port
+  smtp_security       = var.smtp_security
+  smtp_username       = var.smtp_username
+  smtp_password       = var.smtp_password
+  smtp_from_email     = var.smtp_from_email
 }
 
 module "miniflux" {

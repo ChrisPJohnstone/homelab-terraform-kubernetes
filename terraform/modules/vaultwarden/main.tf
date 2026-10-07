@@ -1,6 +1,5 @@
 # TODO: Create user and disable signups
 # TODO: Move to Postgres database
-# TODO: Set up SMTP
 
 resource "kubernetes_persistent_volume_claim_v1" "vaultwarden_data" {
   metadata {
@@ -56,6 +55,34 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
           volume_mount {
             name       = "data"
             mount_path = "/data"
+          }
+          env {
+            name  = "SMTP_HOST"
+            value = var.smtp_host
+          }
+          env {
+            name  = "SMTP_PORT"
+            value = var.smtp_port
+          }
+          env {
+            name  = "SMTP_SECURITY"
+            value = var.smtp_security
+          }
+          env {
+            name  = "SMTP_USERNAME"
+            value = var.smtp_username
+          }
+          env {
+            name  = "SMTP_PASSWORD"
+            value = var.smtp_password
+          }
+          env {
+            name  = "SMTP_FROM"
+            value = var.smtp_from_email
+          }
+          env {
+            name  = "SMTP_FROM_NAME"
+            value = var.smtp_from_name
           }
         }
       }

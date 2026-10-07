@@ -1,3 +1,10 @@
+variable "kubeconfig_path" {
+  description = "Where to store kubeconfig"
+  type        = string
+  nullable    = false
+  default     = "../.kubeconfig"
+}
+
 variable "cloudflare_api_token" {
   description = "API token for connecting to cloudflare"
   type        = string
@@ -19,11 +26,10 @@ variable "cloudflare_zone_id" {
   sensitive   = true
 }
 
-variable "kubeconfig_path" {
-  description = "Where to store kubeconfig"
+variable "domain" {
+  description = "Domain for cloudflare tunnel"
   type        = string
   nullable    = false
-  default     = "../.kubeconfig"
 }
 
 variable "postgres_host" {
@@ -55,10 +61,46 @@ variable "postgres_password" {
   sensitive   = true
 }
 
-variable "domain" {
-  description = "Domain for cloudflare tunnel"
+variable "smtp_host" {
+  description = "Host to connect to SMTP server"
   type        = string
   nullable    = false
+  default     = "smtp.gmail.com"
+}
+
+variable "smtp_port" {
+  description = "Port to connect to SMTP server on"
+  type        = number
+  nullable    = false
+  default     = 587
+}
+
+variable "smtp_security" {
+  description = "Security protocol for SMTP server"
+  type        = string
+  nullable    = false
+  default     = "starttls"
+}
+
+variable "smtp_username" {
+  description = "Username to log in to SMTP server"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "smtp_password" {
+  description = "Password to log in to SMTP server"
+  type        = string
+  nullable    = false
+  sensitive   = true
+}
+
+variable "smtp_from_email" {
+  description = "Email address to show emails from"
+  type        = string
+  nullable    = false
+  sensitive   = true
 }
 
 variable "gateway_ip" {

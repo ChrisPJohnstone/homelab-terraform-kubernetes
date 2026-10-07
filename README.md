@@ -17,6 +17,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 
 #### Services
 
+- [Vaultwarden](https://github.com/dani-garcia/vaultwarden) A self hosted password manager
 - [Miniflux](https://miniflux.app/) A minimalists & opinionated feed reader
 
 ## Usage
@@ -27,6 +28,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
     - `open-iscsi` & `nfs-common` installed on each node that will host replicas, with `iscsid` running
 - A [PostgreSQL](https://www.postgresql.org/) database. For more details on how mine is hosted & provisioned see [homelab-terraform-proxmox](https://github.com/ChrisPJohnstone/homelab-terraform-proxmox) & [homelab-terraform-postgres](https://github.com/ChrisPJohnstone/homelab-terraform-postgres).
 - A [Cloudflare](https://www.cloudflare.com/) account & your own domain
+- An SMTP server set up - [GMail Example](https://www.geeksforgeeks.org/techtips/how-to-use-the-gmail-smtp-server-to-send-emails-for-free/)
 - [Terraform](https://developer.hashicorp.com/terraform) Installed
 
 ### Get kubeconfig
