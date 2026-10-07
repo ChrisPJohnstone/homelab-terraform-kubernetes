@@ -47,6 +47,7 @@ module "vaultwarden" {
   domain              = var.domain
   subdomain           = "wip" # TODO: Migrate & Remove
   vaultwarden_version = var.vaultwarden_version
+  db_host             = var.postgres_host
   smtp_host           = var.smtp_host
   smtp_port           = var.smtp_port
   smtp_security       = var.smtp_security

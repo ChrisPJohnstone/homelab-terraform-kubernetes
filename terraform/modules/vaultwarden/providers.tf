@@ -5,5 +5,9 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 3.2"
     }
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "~> 1.27"
+    }
   }
 }

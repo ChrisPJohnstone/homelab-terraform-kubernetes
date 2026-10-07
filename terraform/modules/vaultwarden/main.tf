@@ -1,6 +1,42 @@
 # TODO: Create user and disable signups
 # TODO: Move to Postgres database
 
+resource "random_password" "db_password" {
+  keepers = {
+    version = var.db_password_version
+  }
+  length      = 16
+  min_lower   = 2
+  min_upper   = 2
+  min_numeric = 2
+  min_special = 2
+}
+
+resource "postgresql_role" "vaultwarden" {
+  depends_on          = [random_password.db_password]
+  login               = true
+  name                = var.db_username
+  password_wo         = local.db_password
+  password_wo_version = var.db_password_version # Needs to be changed for password to be updated
+}
+
+resource "postgresql_database" "vaultwarden" {
+  depends_on = [postgresql_role.vaultwarden]
+  name       = var.db_name
+  owner      = postgresql_role.vaultwarden.id
+}
+
+resource "kubernetes_secret_v1" "vaultwarden" {
+  depends_on = [postgresql_database.vaultwarden]
+  metadata {
+    namespace = var.namespace
+    name      = "vaultwarden"
+  }
+  data = {
+    database_url = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
+  }
+}
+
 resource "kubernetes_persistent_volume_claim_v1" "vaultwarden_data" {
   metadata {
     namespace = var.namespace
@@ -21,7 +57,10 @@ resource "kubernetes_persistent_volume_claim_v1" "vaultwarden_data" {
 }
 
 resource "kubernetes_deployment_v1" "vaultwarden" {
-  depends_on = [kubernetes_persistent_volume_claim_v1.vaultwarden_data]
+  depends_on = [
+    kubernetes_persistent_volume_claim_v1.vaultwarden_data,
+    kubernetes_secret_v1.vaultwarden,
+  ]
   metadata {
     namespace = var.namespace
     name      = "vaultwarden"
@@ -59,6 +98,15 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
           env {
             name  = "DOMAIN"
             value = "https://${local.hostname}"
+          }
+          env {
+            name = "DATABASE_URL"
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret_v1.vaultwarden.metadata[0].name
+                key  = "database_url"
+              }
+            }
           }
           env {
             name  = "SMTP_HOST"

@@ -36,6 +36,40 @@ variable "vaultwarden_version" {
   nullable    = false
 }
 
+variable "db_host" {
+  description = "Host address for the database"
+  type        = string
+  nullable    = false
+}
+
+variable "db_ssl" {
+  description = "Wether to use to use SSL for the database connection"
+  type        = string
+  nullable    = false
+  default     = "disable"
+}
+
+variable "db_username" {
+  description = "Username to use for database connection"
+  type        = string
+  nullable    = false
+  default     = "vaultwarden"
+}
+
+variable "db_password_version" {
+  description = "Password resources can't track state properly while protecting password, to update password change this string"
+  type        = string
+  nullable    = false
+  default     = "one"
+}
+
+variable "db_name" {
+  description = "Name to create database as"
+  type        = string
+  nullable    = false
+  default     = "vaultwarden"
+}
+
 variable "storage_class_name" {
   description = "StorageClass for Vaultwarden PVC"
   type        = string
