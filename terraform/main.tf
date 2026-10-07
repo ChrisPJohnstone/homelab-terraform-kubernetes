@@ -34,6 +34,21 @@ module "longhorn" {
   longhorn_version = var.longhorn_version
 }
 
+module "vaultwarden" {
+  depends_on = [
+    kubernetes_namespace_v1.service_namespace,
+    module.envoy,
+    module.longhorn,
+  ]
+  source              = "./modules/vaultwarden"
+  namespace           = local.service_namespace
+  gateway_name        = module.envoy.gateway_name
+  gateway_namespace   = module.envoy.gateway_namespace
+  domain              = var.domain
+  subdomain           = "wip" # TODO: Migrate & Remove
+  vaultwarden_version = var.vaultwarden_version
+}
+
 module "miniflux" {
   depends_on = [
     kubernetes_namespace_v1.service_namespace,
@@ -53,13 +68,17 @@ module "cloudflare" {
   depends_on = [
     kubernetes_namespace_v1.network_namespace,
     module.miniflux,
+    module.vaultwarden,
   ]
   source              = "./modules/cloudflare/"
   account_id          = var.cloudflare_account_id
   zone_id             = var.cloudflare_zone_id
   gateway_ip          = var.gateway_ip
   gateway_port        = var.gateway_port
-  hostnames           = [module.miniflux.hostname]
   namespace           = local.network_namespace
   cloudflared_version = var.cloudflared_version
+  hostnames = [
+    module.miniflux.hostname,
+    module.vaultwarden.hostname,
+  ]
 }

@@ -121,6 +121,12 @@ variable "cloudflared_version" {
   nullable    = false
 }
 
+variable "vaultwarden_version" {
+  description = "Version of vaultwarden to install"
+  type        = string
+  nullable    = false
+}
+
 variable "miniflux_version" {
   description = "Version of miniflux to install"
   type        = string
