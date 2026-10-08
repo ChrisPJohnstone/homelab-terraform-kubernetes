@@ -42,6 +42,7 @@ resource "kubernetes_secret_v1" "vaultwarden" {
   }
   data = {
     database_url = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
+    db_password  = local.db_password
     admin_token  = local.admin_token
   }
 }

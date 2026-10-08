@@ -15,7 +15,7 @@ metallb_version                 = "0.16.1"
 envoy_gateway_version           = "1.8.1"
 cloudflared_version             = "2026.9.3"
 longhorn_version                = "1.13.0"
-vaultwarden_version             = "1.25.1-alpine"
+vaultwarden_version             = "1.37.4-alpine"
 miniflux_version                = "2.3.3"
 
 vaultwarden_enable_admin_panel  = false
