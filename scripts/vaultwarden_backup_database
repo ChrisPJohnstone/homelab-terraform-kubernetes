@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+BACKUP_DIR="${BACKUP_DIR:-./backups}"
+
+[[ ! -d "${BACKUP_DIR}" ]] && mkdir -p "${BACKUP_DIR}"
+db_url=${ kubectl get secret vaultwarden -n services -o jsonpath='{.data.database_url}' | base64 -d; }
+pg_dump "${db_url}" --no-owner --no-privileges \
+    | gzip > "${BACKUP_DIR}/vaultwarden-$(date +%Y%m%d-%H%M%S).sql.gz"
