@@ -32,6 +32,9 @@ resource "postgresql_database" "vaultwarden" {
   depends_on = [postgresql_role.vaultwarden]
   name       = var.db_name
   owner      = postgresql_role.vaultwarden.id
+  lifecycle {
+    prevent_destroy = true # Disabled by default to prevent accidental deletion
+  }
 }
 
 resource "kubernetes_secret_v1" "vaultwarden" {
