@@ -28,12 +28,17 @@ resource "postgresql_role" "vaultwarden" {
   password_wo_version = var.db_password_version # Needs to be changed for password to be updated
 }
 
+# Lifecycle disables deletion by default to prevent loss of data
+# If you are looking to delete just remove/toggle the lifecycle rule
+#
+# There are scripts in the `scripts/` dir to assist with backing up
+# and restoring database using `pg_dump` & `psql`
 resource "postgresql_database" "vaultwarden" {
   depends_on = [postgresql_role.vaultwarden]
   name       = var.db_name
   owner      = postgresql_role.vaultwarden.id
   lifecycle {
-    prevent_destroy = true # Disabled by default to prevent accidental deletion
+    prevent_destroy = true
   }
 }
 
