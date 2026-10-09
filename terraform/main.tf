@@ -45,7 +45,6 @@ module "vaultwarden" {
   gateway_name        = module.envoy.gateway_name
   gateway_namespace   = module.envoy.gateway_namespace
   domain              = var.domain
-  subdomain           = "wip" # TODO: Migrate & Remove
   vaultwarden_version = var.vaultwarden_version
   db_host             = var.postgres_host
   smtp_host           = var.smtp_host
