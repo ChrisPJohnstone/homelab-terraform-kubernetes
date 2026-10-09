@@ -18,12 +18,6 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 #### Services
 
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) A self hosted password manager
-    - Admin panel & registration are disabled by default for security reasons however you will need to enable the admin temporarily to create your first user.
-        - Toggle the [`vaultwarden_admin_token_version`](./terraform/variables.tf) envar in your [variables](#setting-variables) to `true` & [Deploy](#Managing-Resources)
-        - [Get your admin token from kubernetes secrets](./scripts/vaultwarden_get_secret)
-        - Navigate to `https://domain/admin` e.g. `https://vaultwarden.home.lab/admin`
-        - Follow the UI to invite any users you want
-        - Toggle the [`vaultwarden_admin_token_version`](./terraform/variables.tf) envar in your [variables](#setting-variables) to `false` & [Deploy](#Managing-Resources)
 - [Miniflux](https://miniflux.app/) A minimalists & opinionated feed reader
 
 ## Usage
