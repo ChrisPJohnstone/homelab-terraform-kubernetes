@@ -64,7 +64,7 @@ resource "kubernetes_persistent_volume_claim_v1" "vaultwarden_data" {
     }
   }
   spec {
-    access_modes       = ["ReadWriteOnce"]
+    access_modes       = ["ReadWriteMany"]
     storage_class_name = var.storage_class_name
     resources {
       requests = {
@@ -87,7 +87,7 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
     }
   }
   spec {
-    replicas = 1 # TODO: Implement HA
+    replicas = 2
     selector {
       match_labels = {
         app = "vaultwarden"
