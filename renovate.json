@@ -6,7 +6,7 @@
             "customType": "regex",
             "description": "Update versions in terraform/versions.auto.tfvars",
             "managerFilePatterns": [
-                "/^terraform\\/\\versions\\.auto\\.tfvars$/"
+                "/^terraform\\/versions\\.auto\\.tfvars$/"
             ],
             "matchStrings": [
                 "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>[^\\s]+)(?: registryUrl=(?<registryUrl>[^\\s]+))?[ \\t]*\\r?\\n[a-z_][a-z0-9_]*[ \\t]*=[ \\t]*\"(?<currentValue>[^\"]+)\""
