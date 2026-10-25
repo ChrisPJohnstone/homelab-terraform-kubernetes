@@ -14,4 +14,4 @@ cloudflared_version = "2026.9.3"
 vaultwarden_version = "1.37.4-alpine"
 
 # renovate: datasource=docker depName=miniflux/miniflux
-miniflux_version = "2.3.3"
+miniflux_version = "2.3.4"
