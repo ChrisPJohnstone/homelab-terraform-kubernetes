@@ -38,7 +38,8 @@ module "renovate" {
   depends_on       = [kubernetes_namespace_v1.service_namespace]
   source           = "./modules/renovate/"
   namespace        = local.service_namespace
-  renovate_version = "44.181.5"
+  renovate_token   = var.renovate_token
+  renovate_version = var.renovate_version
 }
 
 module "vaultwarden" {
