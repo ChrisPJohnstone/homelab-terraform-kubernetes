@@ -8,7 +8,7 @@ longhorn_version = "1.13.0"
 envoy_gateway_version = "1.9.3"
 
 # renovate: datasource=docker depName=cloudflare/cloudflared
-cloudflared_version = "2026.10.3"
+cloudflared_version = "2026.10.4"
 
 # renovate: datasource=docker depName=renovate/renovate
 renovate_version = "44.181.5"
