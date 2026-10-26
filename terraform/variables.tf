@@ -188,6 +188,19 @@ variable "vaultwarden_enable_admin_panel" {
   default     = false
 }
 
+variable "nextcloud_version" {
+  description = "Version of nextcloud to install"
+  type        = string
+  nullable    = false
+}
+
+variable "nextcloud_admin_username" {
+  description = "Username to give nextcloud admin user"
+  type        = string
+  nullable    = false
+  default     = "admin"
+}
+
 variable "miniflux_version" {
   description = "Version of miniflux to install"
   type        = string
