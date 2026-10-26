@@ -34,6 +34,14 @@ module "longhorn" {
   longhorn_version = var.longhorn_version
 }
 
+module "renovate" {
+  depends_on       = [kubernetes_namespace_v1.service_namespace]
+  source           = "./modules/renovate/"
+  namespace        = local.service_namespace
+  renovate_token   = var.renovate_token
+  renovate_version = var.renovate_version
+}
+
 module "vaultwarden" {
   depends_on = [
     kubernetes_namespace_v1.service_namespace,

@@ -61,6 +61,12 @@ variable "postgres_password" {
   sensitive   = true
 }
 
+variable "renovate_token" {
+  description = "GitHub token for renovate"
+  type        = string
+  nullable    = false
+}
+
 variable "smtp_host" {
   description = "Host to connect to SMTP server"
   type        = string
@@ -159,6 +165,12 @@ variable "envoy_gateway_version" {
 
 variable "cloudflared_version" {
   description = "Version of cloudflared to install"
+  type        = string
+  nullable    = false
+}
+
+variable "renovate_version" {
+  description = "Version of Mend Renovate to install"
   type        = string
   nullable    = false
 }
