@@ -17,7 +17,7 @@ renovate_version = "44.182.2"
 vaultwarden_version = "1.37.4-alpine"
 
 # renovate: datasource=docker depName=library/nextcloud
-nextcloud_version = "33.0.10-fpm-alpine"
+nextcloud_version = "35.0.2-fpm-alpine"
 
 # renovate: datasource=docker depName=miniflux/miniflux
 miniflux_version = "2.3.4"
