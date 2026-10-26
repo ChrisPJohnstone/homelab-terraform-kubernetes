@@ -18,6 +18,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 #### Services
 
 - [Mend Renovate](https://www.mend.io/renovate/) Dependency management automation
+- [Nextcloud](https://nextcloud.com/) Productivity Software Suite
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) Password manager
 - [Miniflux](https://miniflux.app/) Minimalists feed reader
 
