@@ -39,11 +39,12 @@ resource "kubernetes_secret_v1" "cloudflared" {
     name      = "cloudflared"
   }
   data = {
-    tunnel_token = data.cloudflare_zero_trust_tunnel_cloudflared_token.tunnel.token
+    TUNNEL_TOKEN = data.cloudflare_zero_trust_tunnel_cloudflared_token.tunnel.token
   }
 }
 
 resource "kubernetes_deployment_v1" "cloudflared" {
+  depends_on = [kubernetes_secret_v1.cloudflared]
   metadata {
     namespace = var.namespace
     name      = "cloudflared"
@@ -69,13 +70,9 @@ resource "kubernetes_deployment_v1" "cloudflared" {
           name  = "cloudflared"
           image = "docker.io/cloudflare/cloudflared:${var.cloudflared_version}"
           args  = ["tunnel", "--no-autoupdate", "--metrics", "0.0.0.0:2000", "run"]
-          env {
-            name = "TUNNEL_TOKEN"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret_v1.cloudflared.metadata[0].name
-                key  = "tunnel_token"
-              }
+          env_from {
+            secret_ref {
+              name = kubernetes_secret_v1.cloudflared.metadata[0].name
             }
           }
         }

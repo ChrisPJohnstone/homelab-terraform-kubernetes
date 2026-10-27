@@ -48,11 +48,24 @@ resource "kubernetes_secret_v1" "vaultwarden" {
     namespace = var.namespace
     name      = "vaultwarden"
   }
-  data = {
-    database_url = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
-    db_password  = local.db_password
-    admin_token  = local.admin_token
-  }
+  data = merge(
+    {
+      DATABASE_URL    = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
+      DB_PASSWORD     = local.db_password
+      DOMAIN          = "https://${local.hostname}"
+      SIGNUPS_ALLOWED = false
+      SMTP_HOST       = var.smtp_host
+      SMTP_PORT       = var.smtp_port
+      SMTP_SECURITY   = var.smtp_security
+      SMTP_USERNAME   = var.smtp_username
+      SMTP_PASSWORD   = var.smtp_password
+      SMTP_FROM       = var.smtp_from_email
+      SMTP_FROM_NAME  = var.smtp_from_name
+    },
+    var.enable_admin_panel ? {
+      ADMIN_TOKEN = local.admin_token
+    } : {},
+  )
 }
 
 resource "kubernetes_persistent_volume_claim_v1" "vaultwarden_data" {
@@ -113,62 +126,10 @@ resource "kubernetes_deployment_v1" "vaultwarden" {
             name       = "data"
             mount_path = "/data"
           }
-          env {
-            name  = "DOMAIN"
-            value = "https://${local.hostname}"
-          }
-          env {
-            name = "DATABASE_URL"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret_v1.vaultwarden.metadata[0].name
-                key  = "database_url"
-              }
+          env_from {
+            secret_ref {
+              name = kubernetes_secret_v1.vaultwarden.metadata[0].name
             }
-          }
-          dynamic "env" {
-            for_each = var.enable_admin_panel ? [1] : []
-            content {
-              name = "ADMIN_TOKEN"
-              value_from {
-                secret_key_ref {
-                  name = kubernetes_secret_v1.vaultwarden.metadata[0].name
-                  key  = "admin_token"
-                }
-              }
-            }
-          }
-          env {
-            name  = "SIGNUPS_ALLOWED"
-            value = false
-          }
-          env {
-            name  = "SMTP_HOST"
-            value = var.smtp_host
-          }
-          env {
-            name  = "SMTP_PORT"
-            value = var.smtp_port
-          }
-          env {
-            name  = "SMTP_SECURITY"
-            value = var.smtp_security
-          }
-          env {
-            name  = "SMTP_USERNAME"
-            value = var.smtp_username
-          }
-          env {
-            name  = "SMTP_PASSWORD"
-            value = var.smtp_password
-          }
-          env {
-            name  = "SMTP_FROM"
-            value = var.smtp_from_email
-          }
-          env {
-            name  = "SMTP_FROM_NAME"
-            value = var.smtp_from_name
           }
         }
       }

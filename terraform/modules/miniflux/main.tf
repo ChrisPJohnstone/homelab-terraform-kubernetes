@@ -41,8 +41,11 @@ resource "kubernetes_secret_v1" "miniflux" {
     name      = "miniflux"
   }
   data = {
-    database_url   = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
-    admin_password = local.admin_password
+    DATABASE_URL   = "postgres://${var.db_username}:${urlencode(local.db_password)}@${var.db_host}/${var.db_name}?sslmode=${var.db_ssl}"
+    CREATE_ADMIN   = 1
+    ADMIN_USERNAME = var.admin_username
+    ADMIN_PASSWORD = local.admin_password
+    RUN_MIGRATIONS = 1
   }
 }
 
@@ -72,34 +75,9 @@ resource "kubernetes_deployment_v1" "miniflux" {
         container {
           name  = "miniflux"
           image = "docker.io/miniflux/miniflux:${var.miniflux_version}"
-          env {
-            name = "DATABASE_URL"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret_v1.miniflux.metadata[0].name
-                key  = "database_url"
-              }
-            }
-          }
-          env {
-            name  = "RUN_MIGRATIONS"
-            value = "1"
-          }
-          env {
-            name  = "CREATE_ADMIN"
-            value = "1"
-          }
-          env {
-            name  = "ADMIN_USERNAME"
-            value = var.admin_username
-          }
-          env {
-            name = "ADMIN_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret_v1.miniflux.metadata[0].name
-                key  = "admin_password"
-              }
+          env_from {
+            secret_ref {
+              name = kubernetes_secret_v1.miniflux.metadata[0].name
             }
           }
         }
