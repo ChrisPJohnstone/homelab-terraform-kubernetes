@@ -157,7 +157,7 @@ resource "kubernetes_service_v1" "vaultwarden" {
   }
 }
 
-resource "kubernetes_manifest" "miniflux_httproute" {
+resource "kubernetes_manifest" "vaultwarden_httproute" {
   depends_on = [kubernetes_service_v1.vaultwarden]
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
