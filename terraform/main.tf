@@ -64,28 +64,6 @@ module "vaultwarden" {
   enable_admin_panel  = var.vaultwarden_enable_admin_panel
 }
 
-module "nextcloud" {
-  depends_on = [
-    kubernetes_namespace_v1.service_namespace,
-    module.envoy,
-    module.longhorn,
-  ]
-  source            = "./modules/nextcloud/"
-  namespace         = local.service_namespace
-  gateway_name      = module.envoy.gateway_name
-  gateway_namespace = module.envoy.gateway_namespace
-  domain            = var.domain
-  nextcloud_version = var.nextcloud_version
-  db_host           = var.postgres_host
-  admin_username    = var.nextcloud_admin_username
-  smtp_host         = var.smtp_host
-  smtp_port         = var.smtp_port
-  smtp_security     = var.smtp_security
-  smtp_username     = var.smtp_username
-  smtp_password     = var.smtp_password
-  smtp_from_email   = var.smtp_from_email
-}
-
 module "miniflux" {
   depends_on = [
     kubernetes_namespace_v1.service_namespace,
@@ -105,7 +83,6 @@ module "cloudflare" {
   depends_on = [
     kubernetes_namespace_v1.network_namespace,
     module.miniflux,
-    module.nextcloud,
     module.vaultwarden,
   ]
   source              = "./modules/cloudflare/"
@@ -117,7 +94,6 @@ module "cloudflare" {
   cloudflared_version = var.cloudflared_version
   hostnames = [
     module.miniflux.hostname,
-    module.nextcloud.hostname,
     module.vaultwarden.hostname,
   ]
 }

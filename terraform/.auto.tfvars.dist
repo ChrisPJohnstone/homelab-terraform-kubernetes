@@ -14,5 +14,3 @@ smtp_password                   = "password"
 smtp_from_email                 = "test@test.com"
 
 vaultwarden_enable_admin_panel  = false
-
-nextcloud_admin_username        = "admin"
