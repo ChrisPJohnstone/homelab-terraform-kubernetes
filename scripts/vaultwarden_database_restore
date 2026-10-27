@@ -8,7 +8,7 @@ if [[ ! -f "${1}" ]]; then
     exit 1
 fi
 
-db_url=${ kubectl get secret vaultwarden -n services -o jsonpath='{.data.database_url}' | base64 -d; }
+db_url=${ kubectl get secret vaultwarden -n services -o jsonpath='{.data.DATABASE_URL}' | base64 -d; }
 gunzip -c "${1}" \
     | sed -e '/^SET transaction_timeout =/d' \
     | psql "${db_url}" -v ON_ERROR_STOP=1
