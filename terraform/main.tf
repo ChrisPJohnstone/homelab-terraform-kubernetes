@@ -1,55 +1,50 @@
-resource "kubernetes_namespace_v1" "network_namespace" {
-  metadata { name = var.network_namespace }
-}
-
-resource "kubernetes_namespace_v1" "service_namespace" {
-  metadata { name = var.service_namespace }
-}
-
-resource "kubernetes_namespace_v1" "longhorn_namespace" {
-  metadata { name = var.longhorn_namespace }
+module "namespaces" {
+  source             = "./modules/namespaces"
+  network_namespace  = var.network_namespace
+  service_namespace  = var.service_namespace
+  longhorn_namespace = var.longhorn_namespace
 }
 
 module "metallb" {
-  depends_on      = [kubernetes_namespace_v1.network_namespace]
+  depends_on      = [module.namespaces]
   source          = "./modules/metallb/"
-  namespace       = local.network_namespace
+  namespace       = module.namespaces.network_namespace
   metallb_version = var.metallb_version
 }
 
 module "envoy" {
-  depends_on            = [kubernetes_namespace_v1.network_namespace]
+  depends_on            = [module.namespaces]
   source                = "./modules/envoy/"
-  namespace             = local.network_namespace
+  namespace             = module.namespaces.network_namespace
   envoy_gateway_version = var.envoy_gateway_version
   gateway_ip            = var.gateway_ip
   gateway_port          = var.gateway_port
-  service_namespace     = local.service_namespace
+  service_namespace     = module.namespaces.service_namespace
 }
 
 module "longhorn" {
-  depends_on       = [kubernetes_namespace_v1.longhorn_namespace]
+  depends_on       = [module.namespaces]
   source           = "./modules/longhorn/"
-  namespace        = local.longhorn_namespace
+  namespace        = module.namespaces.longhorn_namespace
   longhorn_version = var.longhorn_version
 }
 
 module "renovate" {
-  depends_on       = [kubernetes_namespace_v1.service_namespace]
+  depends_on       = [module.namespaces]
   source           = "./modules/renovate/"
-  namespace        = local.service_namespace
+  namespace        = module.namespaces.service_namespace
   renovate_token   = var.renovate_token
   renovate_version = var.renovate_version
 }
 
 module "vaultwarden" {
   depends_on = [
-    kubernetes_namespace_v1.service_namespace,
+    module.namespaces,
     module.envoy,
     module.longhorn,
   ]
   source              = "./modules/vaultwarden"
-  namespace           = local.service_namespace
+  namespace           = module.namespaces.service_namespace
   gateway_name        = module.envoy.gateway_name
   gateway_namespace   = module.envoy.gateway_namespace
   domain              = var.domain
@@ -66,11 +61,11 @@ module "vaultwarden" {
 
 module "miniflux" {
   depends_on = [
-    kubernetes_namespace_v1.service_namespace,
+    module.namespaces,
     module.envoy,
   ]
   source            = "./modules/miniflux/"
-  namespace         = local.service_namespace
+  namespace         = module.namespaces.service_namespace
   gateway_name      = module.envoy.gateway_name
   gateway_namespace = module.envoy.gateway_namespace
   domain            = var.domain
@@ -81,7 +76,7 @@ module "miniflux" {
 
 module "cloudflare" {
   depends_on = [
-    kubernetes_namespace_v1.network_namespace,
+    module.namespaces,
     module.miniflux,
     module.vaultwarden,
   ]
@@ -90,7 +85,7 @@ module "cloudflare" {
   zone_id             = var.cloudflare_zone_id
   gateway_ip          = var.gateway_ip
   gateway_port        = var.gateway_port
-  namespace           = local.network_namespace
+  namespace           = module.namespaces.network_namespace
   cloudflared_version = var.cloudflared_version
   hostnames = [
     module.miniflux.hostname,

@@ -125,7 +125,7 @@ variable "gateway_port" {
 }
 
 variable "network_namespace" {
-  description = "Namespaces to create for networking pods"
+  description = "Namespaces to create for networking"
   type        = string
   nullable    = false
   default     = "networking"
