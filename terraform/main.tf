@@ -74,10 +74,32 @@ module "miniflux" {
   admin_username    = var.miniflux_admin_username
 }
 
-module "cloudflare" {
+module "joplin" {
   depends_on = [
     module.namespaces,
+    module.envoy,
+  ]
+  source             = "./modules/joplin/"
+  namespace          = module.namespaces.service_namespace
+  gateway_name       = module.envoy.gateway_name
+  gateway_namespace  = module.envoy.gateway_namespace
+  domain             = var.domain
+  joplin_version     = var.joplin_version
+  db_host            = var.postgres_host
+  smtp_host          = var.smtp_host
+  smtp_port          = var.smtp_port
+  smtp_security      = var.smtp_security
+  smtp_username      = var.smtp_username
+  smtp_password      = var.smtp_password
+  smtp_from_email    = var.smtp_from_email
+  enable_admin_panel = var.joplin_enable_admin_panel
+}
+
+module "cloudflare" {
+  depends_on = [
+    module.joplin,
     module.miniflux,
+    module.namespaces,
     module.vaultwarden,
   ]
   source              = "./modules/cloudflare/"
@@ -88,6 +110,7 @@ module "cloudflare" {
   namespace           = module.namespaces.network_namespace
   cloudflared_version = var.cloudflared_version
   hostnames = [
+    module.joplin.hostname,
     module.miniflux.hostname,
     module.vaultwarden.hostname,
   ]

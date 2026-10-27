@@ -200,3 +200,16 @@ variable "miniflux_admin_username" {
   nullable    = false
   default     = "admin"
 }
+
+variable "joplin_version" {
+  description = "Version of joplin to install"
+  type        = string
+  nullable    = false
+}
+
+variable "joplin_enable_admin_panel" {
+  description = "Toggle enabling joplin admin panel"
+  type        = bool
+  nullable    = false
+  default     = false
+}

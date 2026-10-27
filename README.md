@@ -20,6 +20,7 @@ Terraform configuration that provisions resources into the [Kubernetes](https://
 - [Mend Renovate](https://www.mend.io/renovate/) Dependency management automation
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) Password manager
 - [Miniflux](https://miniflux.app/) Minimalists feed reader
+- [Joplin](https://joplinapp.org/) Note Server
 
 ## Usage
 

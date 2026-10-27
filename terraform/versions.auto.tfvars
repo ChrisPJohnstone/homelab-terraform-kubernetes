@@ -18,3 +18,6 @@ vaultwarden_version = "1.37.4-alpine"
 
 # renovate: datasource=docker depName=miniflux/miniflux
 miniflux_version = "2.3.4"
+
+# renovate: datasource=docker depName=joplin/server
+joplin_version = "3.7.3"
