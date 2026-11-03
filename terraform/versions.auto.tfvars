@@ -11,7 +11,7 @@ envoy_gateway_version = "1.9.3"
 cloudflared_version = "2026.10.7"
 
 # renovate: datasource=docker depName=renovate/renovate
-renovate_version = "44.200.0"
+renovate_version = "44.209.0"
 
 # renovate: datasource=docker depName=vaultwarden/server
 vaultwarden_version = "1.37.5-alpine"
