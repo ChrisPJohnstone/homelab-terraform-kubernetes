@@ -1,5 +1,5 @@
 # renovate: datasource=helm depName=metallb registryUrl=https://metallb.github.io/metallb
-metallb_version = "0.16.1"
+metallb_version = "0.16.2"
 
 # renovate: datasource=helm depName=longhorn registryUrl=https://charts.longhorn.io
 longhorn_version = "1.13.0"
